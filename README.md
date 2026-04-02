@@ -1,59 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+  <h1>🎓 EduTrack & Archive</h1>
+  <p><b>Enterprise-Level Academic Management & Archiving System</b></p>
+  
+  [![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+  [![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+  [![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+  [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com)
+</div>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 About The Project
 
-## About Laravel
+**EduTrack & Archive** is a comprehensive backend system designed to manage academic departments, students, researchers, events, and research archiving. The system features a robust **Role-Based Access Control (RBAC)** architecture, **RESTful APIs**, and is integrated with **Firebase** for advanced authentication and real-time operations.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project is built iteratively following a structured learning phase roadmap, ensuring clean architecture, professional documentation, and scalable backend practices using Laravel 12.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Core Features
+- **Authentication & Authorization**: Multi-guard authentication mapped to specific user roles (Super Admin, Supervisor, Researcher, Organizer).
+- **Academic Archiving**: Upload, manage, and retrieve academic research (PDFs/Docs).
+- **Event Management**: Create academic events and manage seat reservations.
+- **RESTful APIs**: Clean API endpoints powered by Laravel API Resources and Sanctum.
+- **Firebase Integration**: Secondary DB and Auth layer for mobile applications.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🗄️ Database Schema & Architecture
+Our backend relies on a solid relational database design (MySQL):
+- `Users` (Super Admins, Supervisors, Researchers)
+- `Departments`
+- `Researches` (Files, Metadata)
+- `Events` (Academic Events & Seminars)
 
-## Learning Laravel
+## 🚀 Getting Started (Development Setup)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Prerequisites
+- PHP 8.2+
+- Composer
+- MySQL (XAMPP/WAMP or Docker)
+- Git
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Installation
 
-## Laravel Sponsors
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/edutrack-system.git
+   cd edutrack-system
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. Install PHP dependencies:
+   ```bash
+   composer install
+   ```
 
-### Premium Partners
+3. Setup environment variables:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+4. Configure your Database in `.env`:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=edutrack
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## Contributing
+5. Run migrations & start server:
+   ```bash
+   php artisan migrate
+   php artisan serve
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 📚 Project Roadmap (Learning Phases)
+- [x] **Phase 0**: Setup & Environment 
+- [ ] **Phase 1**: Laravel Fundamentals (MVC, Routing, Auth)
+- [ ] **Phase 2**: Core Backend (Models, Relations, RBAC)
+- [ ] **Phase 3**: Advanced Backend (APIs, Storage, Sanctum)
+- [ ] **Phase 4**: Firebase Integration
+- [ ] **Phase 5**: GitHub Documentation
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📄 License
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
