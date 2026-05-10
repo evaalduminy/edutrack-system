@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # ─── 1. Laravel Application (Core Engine) ───
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    container_name: edutrack_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - REDIS_HOST=redis
+      - AI_SERVICE_URL=http://ai_service:8001
+    networks:
+      - edutrack_network
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  # ─── 2. PostgreSQL Database (JSONB Support) ───
+  db:
+    image: postgres:16-alpine
+    container_name: edutrack_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-edutrack}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      # Force UTF-8 encoding for Arabic text and JSONB support
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    volumes:
+      - edutrack_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - edutrack_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-edutrack}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── 3. FastAPI (AI Microservice) ───
+  ai_service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: edutrack_ai
+    restart: unless-stopped
+    volumes:
+      - ./ai-service:/app
+    ports:
+      - "8001:8001"
+    environment:
+      - REDIS_HOST=redis
+    networks:
+      - edutrack_network
+    depends_on:
+      - redis
+
+  # ─── 4. Redis (Queues & Caching) ───
+  redis:
+    image: redis:7-alpine
+    container_name: edutrack_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - edutrack_redis_data:/data
+    networks:
+      - edutrack_network
+
+# ─── Internal Network ───
+networks:
+  edutrack_network:
+    name: edutrack_network
+    driver: bridge
+
+# ─── Persistent Volumes ───
+volumes:
+  edutrack_db_data:
+  edutrack_redis_data:
